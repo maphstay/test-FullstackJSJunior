@@ -1,13 +1,13 @@
 {
-  "name": "test-FullstackJSJunior",
+  "name": "test-fullstackjsjunior",
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon -w ./src -r dotenv/config ./src/server.js",
+    "dev": "nodemon -w src -r dotenv/config src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node -r dotenv/config src/server.js"
   },
   "keywords": [],
   "author": "",

@@ -2,7 +2,7 @@ FROM node:latest
 
 COPY . .
 
-RUN npm i
+RUN npm install
 
 EXPOSE 3000
 
