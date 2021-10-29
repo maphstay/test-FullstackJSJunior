@@ -9,36 +9,94 @@ routes.use(cors());
 
 /**
  * @openapi
+ * components:
+ *     schemas:
+ *         User:
+ *             type: object
+ *             required:
+ *                 - email
+ *                 - password
+ *             properties:
+ *                 id:
+ *                     type: number
+ *                     description: Auto-generated id of user
+ *                 email:
+ *                     type: string
+ *                     description: The user's email
+ *                 password:
+ *                     type: string
+ *                     description: The user's password
+ *                 created_at:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Auto-generated date/time of registry
+ *                 updated_at:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Auto-generated date/time of update
+ *             example:
+ *                 id: 1
+ *                 email: john.doe@gmail.com
+ *                 password: abc123456
+ *                 created_at: 2021-10-29T16:45:04.141Z
+ *                 updated_at: 2021-10-29T16:45:04.141Z
+ */
+
+/**
+ * @openapi
+ * tags:
+ *     name: Users
+ *     description: The users managing API
+ */
+
+/**
+ * @openapi
  * /api/v1/users:
  *   get:
- *     description: Get all users!
+ *     description: Get all users
+ *     tags: [Users]
  *     responses:
  *       200:
- *         description: Returns a list with all users.
+ *         description: Returns a list with all users
+ *         content:
+ *             application/json:
+ *                 schema:
+ *                     type: array
+ *                     items:
+ *                         $ref: '#/components/schemas/User'
  */
-routes.get(`/api/${process.env.API_VERSION}/users`, userController.index);
+routes.get(
+  `/api/${process.env.API_VERSION}/users`,
+  userController.listAllUsers
+);
 
-// /**
-//  * @openapi
-//  * /:
-//  *   get:
-//  *     description: Get a user!
-//  *     responses:
-//  *       200:
-//  *         description: Return only specified user.
-//  */
-// router.get(
-//   `api/${process.env.API_VERSION}/users/:user_id`,
-//   checkUserInArray,
-//   (req, res) => {
-//     const { user_id } = req.params;
-//     const users = readFile();
-//     const id = users.findIndex((item) => item.id === Number(user_id));
-//     const selectedUser = users[id];
-
-//     return res.send(selectedUser);
-//   }
-// );
+/**
+ * @openapi
+ * /api/v1/users/{id}:
+ *   get:
+ *     description: Get a user
+ *     tags: [Users]
+ *     parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *               type: string
+ *           required: true
+ *           description: User id
+ *     responses:
+ *       200:
+ *         description: Return user description by id
+ *         content:
+ *             application/json:
+ *                 schema:
+ *                     $ref: '#/components/schemas/User'
+ *       404:
+ *           description: The user wasn't found
+ */
+routes.get(
+  `/api/${process.env.API_VERSION}/users/:id`,
+  userController.listUser
+);
 
 // /**
 //  * @openapi
