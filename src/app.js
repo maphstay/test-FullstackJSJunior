@@ -1,5 +1,5 @@
 import express from "express";
-import { router } from "./routes/route.js";
+import { routes } from "./routes/route.js";
 import { baseRouter } from "./routes/base.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
@@ -11,15 +11,11 @@ const options = {
 };
 
 const specs = swaggerJsDoc(options);
-
 const app = express();
-
 const baseURL = ``;
 
-app.use(router);
-
+app.use(routes);
 app.use(`${baseURL}/`, baseRouter);
-app.use(`/${process.env.API_VERSION}`, router);
 app.use(`${baseURL}/api-docs`, swaggerUi.serve, swaggerUi.setup(specs));
 
 export { app };

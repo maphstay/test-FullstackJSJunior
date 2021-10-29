@@ -6,7 +6,6 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon -w src -r dotenv/config src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r dotenv/config src/server.js"
   },
   "keywords": [],

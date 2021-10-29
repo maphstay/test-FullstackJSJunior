@@ -1,27 +1,22 @@
 import express from "express";
 import cors from "cors";
-// import listProfitOfAllDaysController from "../controllers/listProfitOfAllDaysController.js";
-// import createOrderController from "../controllers/createOrderController.js";
+import userController from "../controllers/userController.js";
 
-const router = express.Router();
-router.use(express.urlencoded({ extended: true }));
-router.use(express.json());
-router.use(cors());
+const routes = express.Router();
+routes.use(express.urlencoded({ extended: true }));
+routes.use(express.json());
+routes.use(cors());
 
-// /**
-//  * @openapi
-//  * /:
-//  *   get:
-//  *     description: Get all users!
-//  *     responses:
-//  *       200:
-//  *         description: Returns a list with all users.
-//  */
-// router.get(`api/${process.env.API_VERSION}/users`, (_req, res) => {
-//   const users = readFile();
-
-//   return res.send(users);
-// });
+/**
+ * @openapi
+ * /api/v1/users:
+ *   get:
+ *     description: Get all users!
+ *     responses:
+ *       200:
+ *         description: Returns a list with all users.
+ */
+routes.get(`/api/${process.env.API_VERSION}/users`, userController.index);
 
 // /**
 //  * @openapi
@@ -143,4 +138,4 @@ router.use(cors());
 //   }
 // );
 
-export { router };
+export { routes };
