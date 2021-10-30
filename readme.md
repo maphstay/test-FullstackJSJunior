@@ -29,7 +29,7 @@ To use this repository, follow the steps:
 2 - It is possible to consult all registered users, consult a single user by ID, create new users composed of email and password, update user's information, delete all users or delete one user, following the premises proposed in <https://github.com/contele/contele-vagas/tree/master/fullstack-junior><br/>
 3 - Focusing on Clean Code, DRY, KIS and modularized code.
 
-### <p style="font-size:30px; font-weight:bold;"><img style="position:relative; top:-4px;" src="./src/assets/swagger-logo.png" height="30" align="center" /> &nbsp;Documentation</p>
+## <p style="font-size:30px; font-weight:bold;"><img style="position:relative; top: 10px" src="./src/assets/swagger-logo.png" height="25" align="center" /> &nbsp;Documentation</p>
 
 <http://localhost:3000/api-docs/>
 
