@@ -1,4 +1,4 @@
-# CONTELE - Challenge (API UserRegister) - Repository
+# CONTELE - Challenge (API Restful) - Repository
 
 ![CONTELE](./src/assets/contele-logo.jpg)
 
