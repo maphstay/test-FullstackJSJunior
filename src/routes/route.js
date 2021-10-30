@@ -1,5 +1,6 @@
 import express from "express";
 import userController from "../controllers/userController.js";
+import validation from "../helpers/general.js";
 
 const routes = express.Router();
 
@@ -51,6 +52,12 @@ const routes = express.Router();
  *   get:
  *     description: Get all users
  *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         description: Number of current page
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: Returns a list with all users
@@ -60,8 +67,10 @@ const routes = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Internal server error
  */
-routes.get(`/api/${process.env.API_VERSION}/users`, userController.listAll);
+routes.get(`/api/${process.env.API_VERSION}/users`, userController.getAll);
 
 /**
  * @openapi
@@ -71,7 +80,7 @@ routes.get(`/api/${process.env.API_VERSION}/users`, userController.listAll);
  *     tags: [Users]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: user_id
  *         schema:
  *           type: number
  *         required: true
@@ -84,11 +93,14 @@ routes.get(`/api/${process.env.API_VERSION}/users`, userController.listAll);
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       404:
- *         description: The user wasn't found
+ *         description: The user not found
+ *       500:
+ *         description: Internal server error
  */
 routes.get(
-  `/api/${process.env.API_VERSION}/users/:user_id`,
-  userController.list
+    `/api/${process.env.API_VERSION}/users/:user_id`,
+    validation.checkUserExists,
+    userController.getOne
 );
 
 /**
@@ -110,10 +122,19 @@ routes.get(
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Fill all fields
+ *       409:
+ *         description: The email already exist
  *       500:
  *         description: Internal server error
  */
-routes.post(`/api/${process.env.API_VERSION}/users`, userController.create);
+routes.post(
+    `/api/${process.env.API_VERSION}/users`,
+    validation.checkRequire,
+    validation.checkEmail,
+    userController.create
+);
 
 /**
  * @openapi
@@ -123,7 +144,7 @@ routes.post(`/api/${process.env.API_VERSION}/users`, userController.create);
  *     tags: [Users]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: user_id
  *         schema:
  *           type: number
  *         required: true
@@ -141,49 +162,62 @@ routes.post(`/api/${process.env.API_VERSION}/users`, userController.create);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: The user not found
+ *       409:
+ *         description: The email already exist
  *       500:
  *         description: Internal server error
  */
 routes.put(
-  `/api/${process.env.API_VERSION}/users/:user_id`,
-  userController.update
+    `/api/${process.env.API_VERSION}/users/:user_id`,
+    validation.checkUserExists,
+    validation.checkEmail,
+    userController.update
 );
 
 /**
  * @openapi
- * /:
+ * /api/v1/users:
  *   delete:
- *     description: Delete all user!
+ *     description: Delete all user
+ *     tags: [Users]
  *     responses:
  *       200:
- *         description: Return a success message.
+ *         description: Return a success message
+ *       500:
+ *         description: Internal server error
  */
 routes.delete(
-  `/api/${process.env.API_VERSION}/users/:user_id`,
-  userController.delete
+    `/api/${process.env.API_VERSION}/users`,
+    userController.deleteAll
 );
 
-// /**
-//  * @openapi
-//  * /:
-//  *   delete:
-//  *     description: Delete a user!
-//  *     responses:
-//  *       200:
-//  *         description: Return a success message.
-//  */
-// router.delete(
-//   `api/${process.env.API_VERSION}/users/:user_id`,
-//   checkUserInArray,
-//   (req, res) => {
-//     const { user_id } = req.params;
-//     const users = readFile();
-//     const user = users.findIndex((item) => item.id === Number(user_id));
-//     users.splice(user, 1);
-//     writeFile(users);
-
-//     return res.send({ Message: "The user have been deleted!" });
-//   }
-// );
+/**
+ * @openapi
+ * /api/v1/users/{user_id}:
+ *   delete:
+ *     description: Delete a user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: User id
+ *     responses:
+ *       200:
+ *         description: Return a success message
+ *       404:
+ *         description: The user not found
+ *       500:
+ *         description: Internal server error
+ */
+routes.delete(
+    `/api/${process.env.API_VERSION}/users/:user_id`,
+    validation.checkUserExists,
+    userController.deleteOne
+);
 
 export { routes };
