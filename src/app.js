@@ -9,7 +9,6 @@ import swaggerJsDoc from "swagger-jsdoc";
 import definition from "./doc/definition.js";
 
 const app = express();
-const baseURL = ``;
 
 const options = {
     definition,
@@ -26,7 +25,7 @@ app.use(routesPost);
 app.use(routesPut);
 app.use(routesDelete);
 
-app.use(`${baseURL}/api-docs`, swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use((_req, _res, next) => {
     const error = new Error("Not found");
