@@ -6,6 +6,7 @@ export default {
             const limitPerPage = 5;
             const { page = 1 } = req.query;
             const results = await knex("users")
+                .orderBy("id", "asc")
                 .limit(limitPerPage)
                 .offset(((page || 1) - 1) * limitPerPage);
             if (!results.length) return res.status(200).json(results);

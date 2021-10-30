@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import { routes } from "./routes/route.js";
-import { baseRouter } from "./routes/base.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import definition from "./doc/definition.js";
@@ -21,7 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(routes);
 
-app.use(`${baseURL}/`, baseRouter);
 app.use(`${baseURL}/api-docs`, swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use((_req, _res, next) => {

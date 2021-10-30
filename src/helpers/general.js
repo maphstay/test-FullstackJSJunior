@@ -10,9 +10,11 @@ export default {
 
     async checkEmail(req, res, next) {
         const { email } = req.body;
-        const results = await knex("users").where({ email });
-        if (results.length) {
-            return res.status(409).send({ Message: "Email already exist" });
+        if (email) {
+            const results = await knex("users").where({ email });
+            if (results.length) {
+                return res.status(409).send({ Message: "Email already exist" });
+            }
         }
         next();
     },
