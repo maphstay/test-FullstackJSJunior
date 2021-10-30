@@ -5,6 +5,8 @@ export default {
     development: {
         client: "pg",
         connection: {
+            host: "db",
+            port: 5432,
             database: "contele",
             user: "admin",
             password: "12345",

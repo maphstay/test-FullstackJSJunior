@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { routes } from "./routes/route.js";
+import { routesGet } from "./routes/1-getRoutes.js";
+import { routesPost } from "./routes/2-postRoutes.js";
+import { routesPut } from "./routes/3-putRoutes.js";
+import { routesDelete } from "./routes/4-deleteRoutes.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import definition from "./doc/definition.js";
@@ -18,7 +21,10 @@ const specs = swaggerJsDoc(options);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(routes);
+app.use(routesGet);
+app.use(routesPost);
+app.use(routesPut);
+app.use(routesDelete);
 
 app.use(`${baseURL}/api-docs`, swaggerUi.serve, swaggerUi.setup(specs));
 

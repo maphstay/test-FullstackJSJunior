@@ -1,18 +1,21 @@
 version: "4.1"
 
 services:
-  postgres:
-    image: postgres:12.7-alpine
-    restart: always
-    environment:
-      POSTGRES_DB: contele
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 12345
-    ports:
-      - 5432:5432
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 3000:3000
+        depends_on:
+            - db
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+    db:
+        image: postgres:12.7-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: contele
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: 12345
+        ports:
+            - 5432:5432

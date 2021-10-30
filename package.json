@@ -6,7 +6,8 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon -w src -r dotenv/config src/server.js",
-    "start": "node -r dotenv/config src/server.js"
+    "migrate": "npx knex migrate:latest && npx knex seed:run",
+    "start": "npm run migrate && node -r dotenv/config src/server.js"
   },
   "keywords": [],
   "author": "",
