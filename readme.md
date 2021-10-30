@@ -4,30 +4,30 @@
 
 ## :checkered_flag: Dependencies
 
-- Node: 14.15.1
-- yarn: 1.22.5
-- dotenv": 10.0.0
-- express": 4.17.1
-- Git 2.30.1.windows.1
+- Docker 4.1
+- Node: 16.13.0
+- NPM: 8.1.1
+- Express: 4.17.1
+- Knex: 0.95.11
+- Postgres: 12.7
 
 To use this repository, follow the steps:
 
-> git clone <https://github.com/maphstay/test-FullstackJSJunior.git>\
-> cd contele-challenge\
-> yarn install
+> git clone <https://github.com/maphstay/test-FullstackJSJunior.git>
+> cd test-FullstackJSJunior
+> docker compose up -d
+> access the address of swagger documentation below, for test or you can use postman/insomnia.
+> finishing the test use the command docker compose down 
 
 ## :ledger: Description
 
-1 - Building an API to register users. Where it receives email and password and writes it to a JSON file in the DATA folder.<br/>
-2 - It is possible to consult all registered users, consult a single user through ID, create new users composed of Email and password, change a user's email or password, delete all users or delete only a single user, following the premises proposed in <https://github.com/contele/contele-vagas/tree/master/fullstack-junior>
+1 - Builded an API with JavaScrip for register users. Where it receives email and password and saves it to a Postgres database.<br/>
+2 - It is possible to consult all registered users, consult a single user by ID, create new users composed of email and password, update user's information, delete all users or delete one user, following the premises proposed in <https://github.com/contele/contele-vagas/tree/master/fullstack-junior>
+3 - Focusing on Clean Code, DRY, KIS and modularized code.
 
 ### <p style="font-size:30px; font-weight:bold;"><img style="position:relative; top:-4px;" src="./src/assets/swagger-logo.png" height="30" align="center" /> &nbsp;Documentation</p>
 
-Model body: 
-            {
-                "email": "string",
-                "senha": "string"
-            }
+<http://localhost:3000/api-docs/>
 
 ## :bust_in_silhouette: Autor
 
