@@ -14,15 +14,19 @@
 To use this repository, follow the steps:
 
 > git clone <https://github.com/maphstay/test-FullstackJSJunior.git>
+
 > cd test-FullstackJSJunior
+
 > docker compose up -d
+
 > access the address of swagger documentation below, for test or you can use postman/insomnia.
+
 > finishing the test use the command docker compose down 
 
 ## :ledger: Description
 
 1 - Builded an API with JavaScrip for register users. Where it receives email and password and saves it to a Postgres database.<br/>
-2 - It is possible to consult all registered users, consult a single user by ID, create new users composed of email and password, update user's information, delete all users or delete one user, following the premises proposed in <https://github.com/contele/contele-vagas/tree/master/fullstack-junior>
+2 - It is possible to consult all registered users, consult a single user by ID, create new users composed of email and password, update user's information, delete all users or delete one user, following the premises proposed in <https://github.com/contele/contele-vagas/tree/master/fullstack-junior><br/>
 3 - Focusing on Clean Code, DRY, KIS and modularized code.
 
 ### <p style="font-size:30px; font-weight:bold;"><img style="position:relative; top:-4px;" src="./src/assets/swagger-logo.png" height="30" align="center" /> &nbsp;Documentation</p>
