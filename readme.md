@@ -30,7 +30,7 @@ To use this repository, follow the steps:
 
 1 - Builded an API with JavaScrip for register users. Where it receives email and password and saves it to a Postgres database through of Knex quert builder.<br/>
 2 - It is possible to consult all registered users, consult a single user by ID, create new users composed of email and password, update user's information, delete all users or delete one user, following the premises proposed in <https://github.com/contele/contele-vagas/tree/master/fullstack-junior><br/>
-3 - Have been used a library for check strength of password (it's necessary at minimum 6~8 chars beteween letters and numbers) there a library for cryptograph the password and the validation of email was used regex; <br/>
+3 - Have been used a library for check strength of password (it's necessary at minimum 6~8 chars beteween letters and numbers) there is a library for cryptograph the password and on validation of email was used regex; <br/>
 4 - Focusing on Clean Code, DRY, KIS and modularized code.
 
 ## :pencil: Documentation
