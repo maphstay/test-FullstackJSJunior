@@ -1,6 +1,7 @@
 import knex from "../database/index.js";
 import { validations } from "../helpers/validations.js";
 import db from "../helpers/knexValidations.js";
+import { passwordCrypt } from "../helpers/validations.js";
 
 export default {
     async create(req, res, next) {
@@ -12,7 +13,10 @@ export default {
                 const { email, password } = req.body;
                 const dbResult = await db.emailExist(email);
                 if (!dbResult) {
-                    await knex("users").insert({ email, password });
+                    await knex("users").insert({
+                        email,
+                        password: passwordCrypt(password),
+                    });
                     return res
                         .status(201)
                         .send({ Message: "User created with success" });
@@ -79,7 +83,9 @@ export default {
             await knex("users")
                 .update({
                     email: email ? email : currentEmail,
-                    password: password ? password : currentPassword,
+                    password: password
+                        ? passwordCrypt(password)
+                        : passwordCrypt(currentPassword),
                 })
                 .where("id", req.params.user_id);
             return res.status(200).send({
