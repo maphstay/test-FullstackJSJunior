@@ -1,6 +1,5 @@
 import express from "express";
 import userController from "../controllers/userController.js";
-import validation from "../helpers/validations.js";
 const routesPut = express.Router();
 
 /**
@@ -38,8 +37,6 @@ const routesPut = express.Router();
  */
 routesPut.put(
     `/api/${process.env.API_VERSION}/users/:user_id`,
-    validation.checkUserExists,
-    validation.checkEmail,
     userController.update
 );
 

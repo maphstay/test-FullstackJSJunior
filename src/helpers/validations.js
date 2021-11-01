@@ -1,30 +1,41 @@
-import knex from "../database/index.js";
+import { passwordStrength } from "check-password-strength";
 
-export default {
-    checkRequire(req, res, next) {
-        if (!req.body.email || !req.body.password) {
-            return res.status(400).send({ Message: "Fill all fields" });
-        }
-        return next();
-    },
+export const validations = (req) => {
+    const errors = [];
+    if (
+        !Object.values(req.params).length &&
+        (req.method === "GET" || req.method === "DELETE")
+    ) {
+        errors.push({ Message: "Fill an user id" });
+    }
+    if (!req.body.email && req.method === "POST") {
+        errors.push({ Message: "Enter an email" });
+    }
+    if (
+        (req.body.email || req.body.email === "") &&
+        !validEmail(req.body.email) &&
+        (req.method === "POST" || req.method === "PUT")
+    ) {
+        errors.push({ Message: "Enter a valid email" });
+    }
+    if (!req.body.password && req.method === "POST") {
+        errors.push({ Message: "Enter a password" });
+    }
+    if (
+        (req.body.password || req.body.password === "") &&
+        !(passwordStrength(req.body.password).id > 0) &&
+        (req.method === "POST" || req.method === "PUT")
+    ) {
+        errors.push({
+            Message:
+                "Your password is too weak! (fill a minimum length 8 chars, using uppercase, symbols and numbers)",
+        });
+    }
+    return errors;
+};
 
-    async checkEmail(req, res, next) {
-        const { email } = req.body;
-        if (email) {
-            const results = await knex("users").where({ email });
-            if (results.length) {
-                return res.status(409).send({ Message: "Email already exist" });
-            }
-        }
-        next();
-    },
-
-    async checkUserExists(req, res, next) {
-        const { user_id } = req.params;
-        const results = await knex("users").where("id", user_id);
-        if (!results.length) {
-            return res.status(404).send({ Message: "User not found" });
-        }
-        next();
-    },
+const validEmail = (email) => {
+    const regex =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(String(email).toLowerCase());
 };

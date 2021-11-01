@@ -1,6 +1,5 @@
 import express from "express";
 import userController from "../controllers/userController.js";
-import validation from "../helpers/validations.js";
 const routesGet = express.Router();
 
 // const routes = express.Router();
@@ -29,7 +28,7 @@ const routesGet = express.Router();
  *       500:
  *         description: Internal server error
  */
-routesGet.get(`/api/${process.env.API_VERSION}/users`, userController.getAll);
+routesGet.get(`/api/${process.env.API_VERSION}/users`, userController.read);
 
 /**
  * @openapi
@@ -51,15 +50,14 @@ routesGet.get(`/api/${process.env.API_VERSION}/users`, userController.getAll);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
- *       404:
- *         description: The user not found
+ *       400:
+ *         description: Bad Request
  *       500:
  *         description: Internal server error
  */
 routesGet.get(
     `/api/${process.env.API_VERSION}/users/:user_id`,
-    validation.checkUserExists,
-    userController.getOne
+    userController.read
 );
 
 export { routesGet };

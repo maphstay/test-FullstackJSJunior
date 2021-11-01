@@ -1,6 +1,5 @@
 import express from "express";
 import userController from "../controllers/userController.js";
-import validation from "../helpers/validations.js";
 const routesDelete = express.Router();
 
 /**
@@ -17,7 +16,7 @@ const routesDelete = express.Router();
  */
 routesDelete.delete(
     `/api/${process.env.API_VERSION}/users`,
-    userController.deleteAll
+    userController.delete
 );
 
 /**
@@ -36,15 +35,14 @@ routesDelete.delete(
  *     responses:
  *       200:
  *         description: Return a success message
- *       404:
- *         description: The user not found
+ *       400:
+ *         description: Bad request
  *       500:
  *         description: Internal server error
  */
 routesDelete.delete(
     `/api/${process.env.API_VERSION}/users/:user_id`,
-    validation.checkUserExists,
-    userController.deleteOne
+    userController.delete
 );
 
 export { routesDelete };

@@ -1,6 +1,5 @@
 import express from "express";
 import userController from "../controllers/userController.js";
-import validation from "../helpers/validations.js";
 const routesPost = express.Router();
 
 /**
@@ -23,17 +22,12 @@ const routesPost = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       400:
- *         description: Fill all fields
+ *         description: Bad request
  *       409:
  *         description: The email already exist
  *       500:
  *         description: Internal server error
  */
-routesPost.post(
-    `/api/${process.env.API_VERSION}/users`,
-    validation.checkRequire,
-    validation.checkEmail,
-    userController.create
-);
+routesPost.post(`/api/${process.env.API_VERSION}/users`, userController.create);
 
 export { routesPost };
