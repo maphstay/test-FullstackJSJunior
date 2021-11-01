@@ -2,25 +2,18 @@ import knex from "../database/index.js";
 
 export default {
     async checkUserExists(user_id) {
-        if (validId(user_id)) {
-            const results = await knex("users").where("id", user_id);
-            if (!results.length) {
-                return { Message: "User not found" };
-            } else {
-                return results;
-            }
-        } else {
-            return { Message: "Fill a valid user id" };
-        }
+        if (!validId(user_id)) return { Message: "Fill a valid user id" };
+        const results = await knex("users").where("id", user_id);
+        if (results.length) return results;
+        return { Message: "User not found" };
     },
 
-    async emailExist(email) {
-        const results = await knex("users").where({ email });
-        if (results.length) {
-            return { Message: "Email already exist" };
-        } else {
-            return false;
-        }
+    async checkEmailExists(email, id) {
+        const results = await knex("users")
+            .where({ email })
+            .andWhereNot("id", id || null);
+        if (!results.length) return false;
+        return { Message: "Email already exist" };
     },
 };
 
